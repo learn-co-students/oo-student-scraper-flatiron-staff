@@ -2,9 +2,9 @@ require "spec_helper"
 
 describe "Scraper" do
 
-  let!(:student_index_array) {[{:name=>"Joe Burgess", :location=>"New York, NY", :profile_url=>"./fixtures/student-site/students/joe-burgess.html"},
-                               {:name=>"Mathieu Balez", :location=>"New York, NY", :profile_url=>"./fixtures/student-site/students/mathieu-balez.html"},
-                               {:name=>"Diane Vu", :location=>"New York, NY", :profile_url=>"./fixtures/student-site/students/diane-vu.html"}]}
+  let!(:student_index_array) {[{:name=>"Joe Burgess", :location=>"New York, NY", :profile_url=>""},
+                               {:name=>"Mathieu Balez", :location=>"New York, NY", :profile_url=>""},
+                               {:name=>"Diane Vu", :location=>"New York, NY", :profile_url=>""}]}
 
   let!(:student_joe_hash) {{:twitter=>"https://twitter.com/jmburges",
                             :linkedin=>"https://www.linkedin.com/in/jmburges",
@@ -34,14 +34,14 @@ describe "Scraper" do
 
   describe "#scrape_profile_page" do
     it "is a class method that scrapes a student's profile page and returns a hash of attributes describing an individual student" do
-      profile_url = "./fixtures/student-site/students/joe-burgess.html"
+      profile_url = "http://students.learn.co/students/joe-burgess.html"
       scraped_student = Scraper.scrape_profile_page(profile_url)
       expect(scraped_student).to be_a(Hash)
       expect(scraped_student).to match(student_joe_hash)
     end
 
     it "can handle profile pages without all of the social links" do
-      profile_url = "./fixtures/student-site/students/david-kim.html"
+      profile_url = "http://students.learn.co/students/david-kim.html"
       scraped_student = Scraper.scrape_profile_page(profile_url)
       expect(scraped_student).to be_a(Hash)
       expect(scraped_student).to match(student_david_hash)
